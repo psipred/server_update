@@ -32,20 +32,17 @@ chmod uog+rw /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/pdb_aa.fasta
 # Cluster sequences at 90% redundancy
 echo "clustering pdb"
 /scratch0/NOT_BACKED_UP/dbuchan/Code/Update_scripts/src/pdbclust pdb_aa.fasta > cullpdb.lst
-chmod uog+rw /cratch0/NOT_BACKED_UP/dbuchan/tdb_update/cullpdb.lst
-/bin/cp -f cullpdb.lst /webdata/data/autoupdate/
+chmod uog+rw /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/cullpdb.lst
 #exit 0
 
 #run auto_psisum to make new tdb files
 #add new auto_psisum command here.
-cd /webdata/data/autoupdate
 #/webdata/data/autoupdate/make_tdb.pl
-/webdata/data/autoupdate/make_tdb.pl -i /webdata/data/autoupdate/cullpdb.lst -o /webdata/data/autoupdate/psichain.lst -d /webdata/data/dssp/ -s /webdata/data/autoupdate/bin/dsspcmbi -t /webdata/data/tdb/ -u /webdata/data/current/blast/db/uniref90_filt -b /webdata/binaries/current/BLASTplus/bin/psiblast -v 0.001 -h 2 -m /webdata/data/autoupdate/chkparse -c /webdata/binaries/current/T-COFFEE_distribution_Version_7.95/bin/t_coffee -p /webdata/data/pdb/ -q /webdata/data/cath_pdb/CathDomainSeqs.S100.ATOM.annotated -r /webdata/tmp/autoupdate/ -f /webdata/tmp/autoupdate/ -a /webdata/data/cath_pdb/v3_3_0-structural_alignments/ -y C -e /webdata/data/autoupdate/bin/parse_source -l /webdata/data/cath_pdb/CathDomainSeqs.S100.ATOM.annotated
-
+/home/dbuchan/Code/maketdb/bin/make_tdb.pl -i /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/testpdb.lst -o /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/psichain.lst -d /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/dssp/ -s /home/dbuchan/Code/Update_scripts/src/dsspcmbi -t /scratch1/NOT_BACKED_UP/dbuchan/foldlib/ -u /scratch1/NOT_BACKED_UP/dbuchan/uniref/uniref90.fasta -b /scratch0/NOT_BACKED_UP/dbuchan/Applications/ncbi-blast-2.7.1+/bin/psiblast -v 0.001 -h 2 -m /home/dbuchan/Code/maketdb/src/chkparse -c /home/dbuchan/bin/t_coffee -p /scratch0/NOT_BACKED_UP/dbuchan/pdb/ -q /scratch1/NOT_BACKED_UP/dbuchan/uniref/CathDomainSeqs.S100.ATOM.annotated -r /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/ -f /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/ -a /scratch1/NOT_BACKED_UP/dbuchan/cath4.1/domlib/ -y C -e /opt/Code/maketdb/bin/parse_source -l /scratch1/NOT_BACKED_UP/dbuchan/uniref/CathDomainSeqs.S100.ATOM.annotated
 #./auto_psisum >& auto.log
 #### HERE ####
-chmod uog+rw /webdata/data/autoupdate/psichain.lst
-/bin/cp -f psichain.lst /webdata/data/tdb/
+chmod uog+rw /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/psichain.lst
+/bin/cp -f /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/psichain.lst /scratch1/NOT_BACKED_UP/dbuchan/foldlib/
 
 if ($status != 0) then
     tail -50 auto.log | Mail -s AUTO_PSISUM-FAILED psipred@cs.ucl.ac.uk
@@ -61,8 +58,8 @@ if ($new_nl - $old_nl < -500) then
     exit
 endif
 
-cd /webdata/data/tdb/
-chmod uog+rw /webdata/data/tdb/*
+cd /scratch1/NOT_BACKED_UP/dbuchan/foldlib/
+chmod uog+rw /scratch1/NOT_BACKED_UP/dbuchan/foldlib/*
 #remove the old fasta file of all the chains
 /bin/rm -f psichain.fasta
 
@@ -87,36 +84,41 @@ tar zcf foldlib.tar.gz --files-from tar.lst
 
 #move the list of tdb to the old list for next week's update
 /bin/cp -f ./psichain.lst ./psichain.old
-/bin/cp -f ./psichain.lst /webdata/data/autoupdate/psichain.old
-chmod uog+rw /webdata/data/autoupdate/psichain.old
+/bin/cp -f ./psichain.lst /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/psichain.old
+chmod uog+rw /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/psichain.old
 
 #move a copy of the seq file to an old list
-/webdata/data/autoupdate/remove_blanks.pl psichain.fasta > out.fasta
+/scratch0/NOT_BACKED_UP/dbuchan/Code/Update_scripts/src/remove_blanks.pl psichain.fasta > out.fasta
 /bin/mv out.fasta psichain.fasta
 chmod uog+rw psichain.fasta
 
 /bin/cp -f ./psichain.fasta ./psichain.fasta.old
-/bin/cp -f ./psichain.fasta /webdata/data/autoupdate/psichain.fasta.old
+/bin/cp -f ./psichain.fasta /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/psichain.fasta.old
 
-#copy the list to the psipred dir
-/bin/cp -f psichain.lst /webdata/binaries/current/psipred/
-/bin/cp -f psichain.lst /webdata/data/current/psipred/data/
-chmod uog+rw /webdata/binaries/current/psipred/psichain.lst
-chmod uog+rw /webdata/data/current/psipred/data/psichain.lst
+#copy the list to the psipred dir and rsync to other worker hosts
+#
+# Stop remote workers.
+# rsync/copy foldlib
+# start remote workers
+#
+#/bin/cp -f psichain.lst /webdata/binaries/current/psipred/
+#/bin/cp -f psichain.lst /webdata/data/current/psipred/data/
+#chmod uog+rw /webdata/binaries/current/psipred/psichain.lst
+#chmod uog+rw /webdata/data/current/psipred/data/psichain.lst
 
 #move list to public web site
 rsync /webdata/data/tdb/psichain.lst tdb_sync@bioinfadmin:/var/www/html/downloads/pGenTHREADER/foldlibs/
 #/bin/cp -f psichain.lst /var/www/html/foldlib/
 
-#copy the fasta file to the data dir
-/bin/cp -f psichain.fasta /webdata/binaries/current/psipred/
-/bin/cp -f psichain.fasta /webdata/data/current/psipred/data/
-/bin/cp -f psichain.fasta /webdata/data/current/blast/db/
-chmod uog+rw /webdata/binaries/current/psipred/psichain.fasta
-chmod uog+rw /webdata/data/current/psipred/data/psichain.fasta
-chmod uog+rw /webdata/data/current/blast/db/psichain.fasta
-cd /webdata/data/current/blast/db/
-/webdata/binaries/current/BLAST/bin/formatdb -i psichain.fasta
+# #copy the fasta file to the data dir
+# /bin/cp -f psichain.fasta /webdata/binaries/current/psipred/
+# /bin/cp -f psichain.fasta /webdata/data/current/psipred/data/
+# /bin/cp -f psichain.fasta /webdata/data/current/blast/db/
+# chmod uog+rw /webdata/binaries/current/psipred/psichain.fasta
+# chmod uog+rw /webdata/data/current/psipred/data/psichain.fasta
+# chmod uog+rw /webdata/data/current/blast/db/psichain.fasta
+# cd /webdata/data/current/blast/db/
+# /webdata/binaries/current/BLAST/bin/formatdb -i psichain.fasta
 #move fasta file to public website
 rsync /webdata/data/tdb/psichain.fasta tdb_sync@bioinfadmin:/var/www/html/downloads/pGenTHREADER/foldlibs/
 #/bin/cp -f psichain.fasta /var/www/html/foldlib/
@@ -130,10 +132,11 @@ rsync /webdata/data/tdb/foldlib.tar.gz tdb_sync@bioinfadmin:/var/www/html/downlo
 #csh /var/www/cgi-bin/psipred/bin/make_images
 
 # Clean the temp directory
-rm -f /webdata/tmp/autoupdate/*.fsa
-rm -f /webdata/tmp/autoupdate/*.chk
-rm -f /webdata/tmp/autoupdate/*.slx
-/usr/bin/find /webdata/tmp/autoupdate/ -mindepth 1 -mtime +60 -exec rm -rf {} \;
+rm -f /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/*.fsa
+rm -f /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/*.chk
+rm -f /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/*.slx
+rm -f /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/*.bls
+# /usr/bin/find /webdata/tmp/autoupdate/ -mindepth 1 -mtime +60 -exec rm -rf {} \;
 
 # Inform psipred email address
 cd /webdata/data/autoupdate/

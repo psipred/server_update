@@ -1,7 +1,7 @@
 #define PEPSIZE 10
 #define PEPSTEP 1
 #define MAXNRES 100000
-#define SIMCUT 100
+#define SIMCUT 90
 
 /* Non-redundant data bank generator - DTJ 1993 */
 
@@ -47,11 +47,11 @@ unsigned
 
     for (l = hashval = 0; *s && l < PEPSIZE; s++, l++)
         hashval = ((hashval << 5) + hashval) + *s; /* hash * 33 + c */
-    
+
     return hashval & ((HASHTLEN)-1);
 }
 
-int 
+int
 nwscore(char *seq1, char *seq2, int len1, int len2, int gap_pen)
 {
     int             diag, col, row, maxcol, maxrows[MAXNRES], toprows[MAXNRES], i, j, maxscore = -BIG;
@@ -230,7 +230,7 @@ int addseq(char *desc, char *seq, int seqlen)
 	perid = 100 * lookup(seq, hashtab) / seqlen;
 
 /*	printf("%ID = %d\n", perid); */
-	
+
 	if (perid < SIMCUT)
 	{
 	    if (!install(seq, hashtab))
@@ -307,7 +307,7 @@ main(int argc, char **argv)
 	    if (addflg && ns % 1000 == 0)
 		fprintf(stderr, "%d/%d\n", ns, totns);
 	}
-	
+
 	fclose(ifp);
     }
 
