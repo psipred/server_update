@@ -1,0 +1,21 @@
+#!/bin/#!/usr/bin/env bash
+trap "echo Exited!; exit;" SIGINT SIGTERM
+
+MAX_RETRIES=300
+i=0
+
+# Set the initial return value to failure
+
+cd /scratch0/NOT_BACKED_UP/dbuchan/pdb
+false
+while [ $? -ne 0 -a $i -lt $MAX_RETRIES ]
+do
+#echo "HEY"
+i=$(($i+1))
+rsync -rLpt -v -z --delete rsync.ebi.ac.uk::pub/databases/msd/pdb_uncompressed/ /scratch0/NOT_BACKED_UP/dbuchan/pdb
+done
+
+if [ $i -eq $MAX_RETRIES ]
+then
+echo "Hit maximum number of retries, giving up."
+fi
