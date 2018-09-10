@@ -1,5 +1,8 @@
 #!/bin/tcsh
 
+# stop workers
+# start workers with 1 less thread
+
 #make sure we are in the pdb
 #is this right or should we be in autoupdate?
 cd /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/
@@ -141,6 +144,9 @@ rm -f /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/*.bls
 # Inform psipred email address
 cd /webdata/data/autoupdate/
 wc -l ./psichain.lst | Mail -s AUTOUPDATE-OK psipred@cs.ucl.ac.uk
+
+# stop workers
+# start workers again
 
 #clean temporary files
 #rm -f 1*.aux

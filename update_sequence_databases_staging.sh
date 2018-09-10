@@ -1,22 +1,23 @@
 #!/bun/sh
 # activate virtual env
-source /scratch0/NOT_BACKED_UP/dbuchan/virtualenvs/analytics_automated/bin/activate
+source /home/blast_worker/aa_env/bin/activate
 # stop workers and restart with one fewer worker
-cd /home/dbuchan/Code/analytics_automated
+cd /home/blast_worker/analytics_automated
 celery multi stop worker --pidfile=celery.pid
-celery --app=analytics_automated_project.celery:app worker --loglevel=INFO -Q low_localhost,localhost,high_localhost,low_GridEngine,GridEngine,high_GridEngine,low_R,R,high_R,low_Python,Python,high_Python --pidfile=celery.pid --concurrency 11
+celery --app=analytics_automated_project.celery:app worker --loglevel=INFO -Q low_localhost,localhost,high_localhost,low_GridEngine,GridEngine,high_GridEngine,low_R,R,high_R,low_Python,Python,high_Python --pidfile=celery.pid --concurrency 47
 # get the database
-cd /scratch1/NOT_BACKED_UP/dbuchan/uniref/uniref_tmp
+cd /data/uniref_tmp
 wget --timeout 120 ftp://ftp.uniprot.org/pub/databases/uniprot/uniref/uniref90/uniref90.fasta.gz
 get --timeout 120 http://dunbrack.fccc.edu/Guoli/culledpdb_hh/pdbaa.gz
 gunzip uniref90.fasta.gz
 gunzip pdbaa
 # build blastdb
-/scratch0/NOT_BACKED_UP/dbuchan/Applications/ncbi-blast-2.2.31+/bin/makeblastdb -dbtype prot -in uniref90.fasta
-/scratch0/NOT_BACKED_UP/dbuchan/Applications/ncbi-blast-2.2.31+/bin/makeblastdb -dbtype prot -in pdbaa
+/usr/local/bin/makeblastdb -dbtype prot -in uniref90.fasta
+/usr/local/bin/makeblastdb -dbtype prot -in pdbaa
 # move db
-cd /home/dbuchan/Code/analytics_automated
+cd /home/blast_worker/analytics_automated
 celery multi stop worker --pidfile=celery.pid
-mv /scratch1/NOT_BACKED_UP/dbuchan/uniref/uniref_tmp/* /scratch1/NOT_BACKED_UP/dbuchan/uniref
+mv /data/uniref_tmp/uniref90* /data/uniref
+mv /data/uniref_tmp/pdbaa* /data/pdbaa
 # restart workers
 celery --app=analytics_automated_project.celery:app worker --loglevel=INFO -Q low_localhost,localhost,high_localhost,low_GridEngine,GridEngine,high_GridEngine,low_R,R,high_R,low_Python,Python,high_Python --pidfile=celery.pid
