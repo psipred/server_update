@@ -41,7 +41,7 @@ chmod uog+rw /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/cullpdb.lst
 #run auto_psisum to make new tdb files
 #add new auto_psisum command here.
 #/webdata/data/autoupdate/make_tdb.pl
-/home/dbuchan/Code/maketdb/bin/make_tdb.pl -i /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/testpdb.lst -o /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/psichain.lst -d /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/dssp/ -s /home/dbuchan/Code/Update_scripts/src/dsspcmbi -t /scratch1/NOT_BACKED_UP/dbuchan/foldlib/ -u /scratch1/NOT_BACKED_UP/dbuchan/uniref/uniref90.fasta -b /scratch0/NOT_BACKED_UP/dbuchan/Applications/ncbi-blast-2.7.1+/bin/psiblast -v 0.001 -h 2 -m /home/dbuchan/Code/maketdb/src/chkparse -c /home/dbuchan/bin/t_coffee -p /scratch0/NOT_BACKED_UP/dbuchan/pdb/ -q /scratch1/NOT_BACKED_UP/dbuchan/uniref/CathDomainSeqs.S100.ATOM.annotated -r /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/ -f /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/ -a /scratch1/NOT_BACKED_UP/dbuchan/cath4.1/domlib/ -y C -e /opt/Code/maketdb/bin/parse_source -l /scratch1/NOT_BACKED_UP/dbuchan/uniref/CathDomainSeqs.S100.ATOM.annotated
+/home/dbuchan/Code/maketdb/bin/make_tdb.pl -i /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/cullpdb.lst -o /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/psichain.lst -d /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/dssp/ -s /home/dbuchan/Code/Update_scripts/src/dsspcmbi -t /scratch1/NOT_BACKED_UP/dbuchan/foldlib/ -u /scratch1/NOT_BACKED_UP/dbuchan/uniref/uniref90.fasta -b /scratch0/NOT_BACKED_UP/dbuchan/Applications/ncbi-blast-2.7.1+/bin/psiblast -v 0.001 -h 2 -m /home/dbuchan/Code/maketdb/src/chkparse -c /home/dbuchan/bin/t_coffee -p /scratch0/NOT_BACKED_UP/dbuchan/pdb/ -q /scratch1/NOT_BACKED_UP/dbuchan/uniref/CathDomainSeqs.S100.ATOM.annotated -r /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/ -f /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/ -a /scratch1/NOT_BACKED_UP/dbuchan/cath4.1/domlib/ -y C -e /opt/Code/maketdb/bin/parse_source -l /scratch1/NOT_BACKED_UP/dbuchan/uniref/CathDomainSeqs.S100.ATOM.annotated
 #./auto_psisum >& auto.log
 #### HERE ####
 chmod uog+rw /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/psichain.lst
@@ -79,7 +79,7 @@ foreach tdb (`cat psichain.lst`)
     echo $tdb.tdb >> tar.lst
 
 	#then add the tdb file's sequence to the new fastafile
-    /webdata/data/autoupdate/tdb2fasta < $tdb.tdb >> psichain.fasta
+    /scratch0/NOT_BACKED_UP/dbuchan/Code/Update_scripts/src/tdb2fasta < $tdb.tdb >> psichain.fasta
 end
 #exit 0
 chmod uog+rw psichain.fasta
@@ -110,7 +110,7 @@ chmod uog+rw psichain.fasta
 #chmod uog+rw /webdata/data/current/psipred/data/psichain.lst
 
 #move list to public web site
-rsync /webdata/data/tdb/psichain.lst tdb_sync@bioinfadmin:/var/www/html/downloads/pGenTHREADER/foldlibs/
+rsync /scratch1/NOT_BACKED_UP/dbuchan/foldlib tdb_sync@bioinfadmin:/var/www/html/downloads/pGenTHREADER/foldlibs/
 #/bin/cp -f psichain.lst /var/www/html/foldlib/
 
 # #copy the fasta file to the data dir

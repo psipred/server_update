@@ -88,7 +88,7 @@ tar zcf foldlib.tar.gz --files-from tar.lst
 #move the list of tdb to the old list for next week's update
 /bin/cp -f ./psichain.lst ./psichain.old
 /bin/cp -f ./psichain.lst /opt/pgenthreader/tdb_update/psichain.old
-chmod uog+rw /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/psichain.old
+chmod uog+rw /opt/pgenthreader/tdb_update/psichain.old
 
 #move a copy of the seq file to an old list
 /home/django_aa/server_update/src/remove_blanks.pl psichain.fasta > out.fasta
