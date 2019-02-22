@@ -5,7 +5,7 @@
 
 #make sure we are in the pdb
 #is this right or should we be in autoupdate?
-cd /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/
+cd /data/update_tdb
 
 #set the t_coffee env variables
 setenv TMP_4_TCOFFEE .t_coffee
@@ -17,18 +17,18 @@ setenv CACHE_4_TCOFFEE .t_coffee/cache
 
 #chmod uog+rw /webdata/data/pdb/*
 #pdb is now so large we need to pipe the chmod from a find listing
-find /scratch0/NOT_BACKED_UP/dbuchan/pdb/ -type f -exec chmod uog+rw {} \;
-find /scratch0/NOT_BACKED_UP/dbuchan/pdb/ -type f -exec gunzip {} \;
+find /data/pdb/ -type f -exec chmod uog+rw {} \;
+find /data/pdb/ -iname "*.gz" -type f -exec gunzip {} \;
 
 echo "building pdb list"
 # Build cullpdb list
 
 #make a list of the pdb's we've grabbed
-/bin/ls -1 /scratch0/NOT_BACKED_UP/dbuchan/pdb/ > pdb.lst
+/bin/ls -1 /data/pdb/ > pdb.lst
 
 # Extract protein sequences from PDB ATOM records (ignore CA-only entries)
 echo "extracting aa sequences"
-/scratch0/NOT_BACKED_UP/dbuchan/Code/Update_scripts/src/makepdbaa /scratch0/NOT_BACKED_UP/dbuchan/pdb pdb.lst pdb_aa.fasta >& /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/makepdb.log
+/data/Update_scripts/src/makepdbaa /scratch0/NOT_BACKED_UP/dbuchan/pdb pdb.lst pdb_aa.fasta >& /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/makepdb.log
 chmod uog+rw /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/makepdb.log
 chmod uog+rw /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/pdb_aa.fasta
 
