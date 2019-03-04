@@ -28,20 +28,20 @@ echo "building pdb list"
 
 # Extract protein sequences from PDB ATOM records (ignore CA-only entries)
 echo "extracting aa sequences"
-/data/Update_scripts/src/makepdbaa /scratch0/NOT_BACKED_UP/dbuchan/pdb pdb.lst pdb_aa.fasta >& /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/makepdb.log
-chmod uog+rw /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/makepdb.log
-chmod uog+rw /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/pdb_aa.fasta
+/data/server_update/src/makepdbaa /data/pdb pdb.lst pdb_aa.fasta >& /data/update_tdb/makepdb.log
+chmod uog+rw /data/update_tdb/makepdb.log
+chmod uog+rw /data/update_tdb/pdb_aa.fasta
 
 # Cluster sequences at 90% redundancy
 echo "clustering pdb"
-/scratch0/NOT_BACKED_UP/dbuchan/Code/Update_scripts/src/pdbclust pdb_aa.fasta > cullpdb.lst
-chmod uog+rw /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/cullpdb.lst
+/data/server_update/src/pdbclust pdb_aa.fasta > cullpdb.lst
+chmod uog+rw /data/update_tdb/cullpdb.lst
 #exit 0
 
 #run auto_psisum to make new tdb files
 #add new auto_psisum command here.
 #/webdata/data/autoupdate/make_tdb.pl
-/home/dbuchan/Code/maketdb/bin/make_tdb.pl -i /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/cullpdb.lst -o /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/psichain.lst -d /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/dssp/ -s /home/dbuchan/Code/Update_scripts/src/dsspcmbi -t /scratch1/NOT_BACKED_UP/dbuchan/foldlib/ -u /scratch1/NOT_BACKED_UP/dbuchan/uniref/uniref90.fasta -b /scratch0/NOT_BACKED_UP/dbuchan/Applications/ncbi-blast-2.7.1+/bin/psiblast -v 0.001 -h 2 -m /home/dbuchan/Code/maketdb/src/chkparse -c /home/dbuchan/bin/t_coffee -p /scratch0/NOT_BACKED_UP/dbuchan/pdb/ -q /scratch1/NOT_BACKED_UP/dbuchan/uniref/CathDomainSeqs.S100.ATOM.annotated -r /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/ -f /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/ -a /scratch1/NOT_BACKED_UP/dbuchan/cath4.1/domlib/ -y C -e /opt/Code/maketdb/bin/parse_source -l /scratch1/NOT_BACKED_UP/dbuchan/uniref/CathDomainSeqs.S100.ATOM.annotated
+/data/maketdb/bin/make_tdb.pl -i /data/update_tdb/cullpdb.lst -o /data/update_tdb/psichain.lst -d /data/update_tdb/dssp/ -s /data/server_update/src/dsspcmbi -t /data/pgenthreader/tdb/ -u /data/uniref/unirefmain.fasta -b /data/ncbi-blast-2.7.1+/bin/psiblast -v 0.001 -h 2 -m /data/maketdb/src/chkparse -c /data/T-COFFEE_distribution_Version_11.00.8cbe486/bin/binaries/linux/t_coffee -p /data/pdb/ -q /data/cath_data/cath-domain-list-v4_2_0_annotated.txt -r /data/update_tdb/ -f /data/update_tdb/ -a /data/pgenthreader/cath_domain_tdb -y C -e /data/maketdb/bin/parse_source -l /data/cath_data/cath-domain-seqs-S100-v4_1_0.fa
 #./auto_psisum >& auto.log
 #### HERE ####
 chmod uog+rw /scratch0/NOT_BACKED_UP/dbuchan/tdb_update/psichain.lst
