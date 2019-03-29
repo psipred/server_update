@@ -34,3 +34,5 @@ if [ $i -eq $MAX_RETRIES ]
 then
 echo "Hit maximum number of retries, giving up."
 fi
+
+Mail -s PDBUPDATE-OK psipred@cs.ucl.ac.uk

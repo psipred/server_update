@@ -24,3 +24,5 @@ ssh blast_worker@bm1 "source /home/blast_worker/aa_env/bin/activate; celery mult
 scp /data/update_tmp/pdbaa* blast_worker@bm1:/data/pdbaa/
 scp /data/update_tmp/uniref* blast_worker@bm1:/data/uniref/
 ssh blast_worker@bm1 "source /home/blast_worker/aa_env/bin/activate; cd /home/blast_worker/analytics_automated/; celery --app=analytics_automated_project.celery:app worker --loglevel=INFO -Q low_localhost,localhost,high_localhost,celery,low_R,R,high_R,low_Python,Python,high_Python --detach --pidfile=celery.pid"
+
+Mail -s BLASTUPDATE-OK psipred@cs.ucl.ac.uk
