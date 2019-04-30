@@ -35,4 +35,4 @@ then
 echo "Hit maximum number of retries, giving up."
 fi
 
-echo "finished" | Mail -s "PDBUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
+echo `uname -n` | Mail -s "PDBUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
