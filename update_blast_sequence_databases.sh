@@ -18,11 +18,11 @@ cd /home/blast_worker/analytics_automated/
 celery multi stop_verify worker --pidfile=celery.pid
 cp /data/update_tmp/pdbaa* /data/pdbaa/
 cp /data/update_tmp/uniref* /data/uniref/
-celery --app=analytics_automated_project.celery:app worker --loglevel=INFO -Q sequpdate,low_localhost,localhost,high_localhost,celery,low_R,R,high_R,low_Python,Python,high_Python --detach --pidfile=celery.pid
+celery --app=analytics_automated_project.celery:app worker --loglevel=INFO -Q sequpdate,blast,low_blast,high_blast --detach --pidfile=celery.pid
 
 ssh blast_worker@bm1 "source /home/blast_worker/aa_env/bin/activate; celery multi stop_verify worker --pidfile=/home/blast_worker/analytics_automated/celery.pid"
 scp /data/update_tmp/pdbaa* blast_worker@bm1:/data/pdbaa/
 scp /data/update_tmp/uniref* blast_worker@bm1:/data/uniref/
-ssh blast_worker@bm1 "source /home/blast_worker/aa_env/bin/activate; cd /home/blast_worker/analytics_automated/; celery --app=analytics_automated_project.celery:app worker --loglevel=INFO -Q low_localhost,localhost,high_localhost,celery,low_R,R,high_R,low_Python,Python,high_Python --detach --pidfile=celery.pid"
+ssh blast_worker@bm1 "source /home/blast_worker/aa_env/bin/activate; cd /home/blast_worker/analytics_automated/; celery --app=analytics_automated_project.celery:app worker --loglevel=INFO -Q blast,low_blast,high_blast --detach --pidfile=celery.pid"
 
 echo `uname -n` | Mail -s "BLASTUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
