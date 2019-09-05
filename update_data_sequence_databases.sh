@@ -1,5 +1,11 @@
 #!/bin/sh
-set -e
+
+err_report() {
+  echo "errexit on line $(caller)" >&2
+  Mail -s "SEQUPDATE-FAILED $(caller)" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
+}
+trap err_report ERR
+
 cd /data/update_tmp
 
 wget --timeout 120 http://dunbrack.fccc.edu/Guoli/culledpdb_hh/pdbaa.gz

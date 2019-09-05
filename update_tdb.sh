@@ -1,4 +1,9 @@
 #!/bin/tcsh
+err_report() {
+  echo "errexit on line $(caller)" >&2
+  Mail -s "TDBUPDATE-FAILED $(caller)" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
+}
+trap err_report ERR
 
 # stop workers
 # start workers with 1 less thread
