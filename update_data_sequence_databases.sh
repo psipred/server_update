@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 cd /data/update_tmp
 
 wget --timeout 120 http://dunbrack.fccc.edu/Guoli/culledpdb_hh/pdbaa.gz
