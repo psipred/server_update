@@ -14,7 +14,7 @@ i=0
 
 cd /data/pdb
 
-while [$i -lt $MAX_RETRIES ]
+while [ $i -lt $MAX_RETRIES ]
 do
 echo "HEY 1"
 i=$(($i+1))
@@ -31,7 +31,7 @@ fi
 
 i=0
 cd /data/pdb
-while [$i -lt $MAX_RETRIES ]
+while [ $i -lt $MAX_RETRIES ]
 do
 echo "HEY 2"
 i=$(($i+1))
