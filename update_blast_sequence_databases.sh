@@ -6,7 +6,8 @@ err_report() {
 trap err_report ERR
 
 cd /data/update_tmp
-
+rm pdbaa.gz
+rm uniref90.fasta.gz
 wget --timeout 120 http://dunbrack.fccc.edu/Guoli/culledpdb_hh/pdbaa.gz
 gunzip pdbaa.gz
 /opt/blast-2.2.26/bin/formatdb -i pdbaa -p T
