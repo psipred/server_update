@@ -3,6 +3,7 @@
 err_report() {
   echo "errexit on line $(caller)" # >&2
   echo `uname -n` | Mail -s "PDBUPDATE-FAILED $(caller)" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
+  exit 0
 }
 trap err_report ERR
 
