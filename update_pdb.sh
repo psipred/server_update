@@ -1,5 +1,11 @@
 #!/bin/#!/usr/bin/env bash
-trap "echo Exited!; exit;" SIGINT SIGTERM
+
+err_report() {
+  echo "errexit on line $(caller)" >&2
+  echo `uname -n` | Mail -s "SEQUPDATE-FAILED $(caller)" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
+}
+trap err_report ERR
+
 
 MAX_RETRIES=300
 i=0
