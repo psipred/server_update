@@ -1,4 +1,4 @@
-#!/bin/#!/usr/bin/env bash
+#!/bin/sh
 
 err_report() {
   echo "errexit on line $(caller)" >&2
