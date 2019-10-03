@@ -13,8 +13,8 @@ i=0
 # Set the initial return value to failure
 
 cd /data/pdb
-( exit 0 )
-echo $?
+( exit 1 )
+
 while [ $? -ne 0 -a $i -lt $MAX_RETRIES ]
 do
 #echo "HEY"
@@ -29,7 +29,7 @@ fi
 
 i=0
 cd /data/pdb
-( exit 0 )
+( exit 1 )
 while [ $? -ne 0 -a $i -lt $MAX_RETRIES ]
 do
 #echo "HEY"
