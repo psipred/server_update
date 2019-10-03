@@ -16,7 +16,7 @@ cd /data/pdb
 
 while [ $? -ne 0 -o $i -lt $MAX_RETRIES ]
 do
-#echo "HEY"
+echo "HEY 1"
 i=$(($i+1))
 rsync -rlpt -v -z --delete --copy-links --port=33444 rsync.rcsb.org::ftp_data/structures/all/pdb/ ./
 done
@@ -30,7 +30,7 @@ i=0
 cd /data/pdb
 while [ $? -ne 0 -o $i -lt $MAX_RETRIES ]
 do
-#echo "HEY"
+echo "HEY 2"
 i=$(($i+1))
 ssh django_worker@bm3 rsync -rlpt -v -z --delete --copy-links --port=33444 rsync.rcsb.org::ftp_data/structures/all/pdb/ /data/pdb
 done
