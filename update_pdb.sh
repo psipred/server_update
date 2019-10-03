@@ -13,10 +13,10 @@ i=0
 # Set the initial return value to failure
 
 cd /data/pdb
-
+#false
 while [ $? -ne 0 -a $i -lt $MAX_RETRIES ]
 do
-echo "HEY"
+#echo "HEY"
 i=$(($i+1))
 rsync -rlpt -v -z --delete --copy-links --port=33444 rsync.rcsb.org::ftp_data/structures/all/pdb/ ./
 done
@@ -28,7 +28,7 @@ fi
 
 i=0
 cd /data/pdb
-
+#false
 while [ $? -ne 0 -a $i -lt $MAX_RETRIES ]
 do
 #echo "HEY"
