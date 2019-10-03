@@ -7,6 +7,9 @@ err_report() {
 trap err_report ERR
 
 cd /data/update_tmp
+rm pdbaa.gz
+rm uniref90.fasta.gz
+rm pdb70_from_mmcif_latest.tar.gz
 
 wget --timeout 120 http://dunbrack.fccc.edu/Guoli/culledpdb_hh/pdbaa.gz
 gunzip pdbaa.gz
