@@ -9,11 +9,11 @@ cd /data/update_tmp
 rm -f pdbaa.gz
 rm -f uniref90.fasta.gz
 wget --timeout 120 http://dunbrack.fccc.edu/Guoli/culledpdb_hh/pdbaa.gz
-gunzip pdbaa.gz
+gunzip -f pdbaa.gz
 /opt/blast-2.2.26/bin/formatdb -i pdbaa -p T
 
 wget --timeout 120 ftp://ftp.uniprot.org/pub/databases/uniprot/uniref/uniref90/uniref90.fasta.gz
-gunzip uniref90.fasta.gz
+gunzip -f uniref90.fasta.gz
 /opt/blast-2.2.26/bin/formatdb -i uniref90.fasta -p T
 
 #

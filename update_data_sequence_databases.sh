@@ -12,11 +12,11 @@ rm -f uniref90.fasta.gz
 rm -f pdb70_from_mmcif_latest.tar.gz
 
 wget --timeout 120 http://dunbrack.fccc.edu/Guoli/culledpdb_hh/pdbaa.gz
-gunzip pdbaa.gz
+gunzip -f pdbaa.gz
 /data/ncbi-blast-2.7.1+/bin/makeblastdb -dbtype prot -in pdbaa
 
 wget --timeout 120 ftp://ftp.uniprot.org/pub/databases/uniprot/uniref/uniref90/uniref90.fasta.gz
-gunzip uniref90.fasta.gz
+gunzip -f uniref90.fasta.gz
 mv uniref90.fasta unirefmain.fasta
 /data/ncbi-blast-2.7.1+/bin/makeblastdb -dbtype prot -in unirefmain.fasta
 /data/hmmer-3.1b2-linux-intel-x86_64/binaries/esl-sfetch --index unirefmain.fasta
