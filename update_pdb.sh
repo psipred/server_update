@@ -28,6 +28,7 @@ fi
 
 i=0
 cd /data/pdb
+
 while [ $? -ne 0 -a $i -lt $MAX_RETRIES ]
 do
 #echo "HEY"
