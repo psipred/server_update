@@ -117,7 +117,7 @@ chmod uog+rw psichain.fasta
 #chmod uog+rw /webdata/data/current/psipred/data/psichain.lst
 
 #move list to public web site
-/bin/cp -f psichain.lst /var/www/html/foldlib/
+# /bin/cp -f psichain.lst /var/www/html/foldlib/
 
 # #copy the fasta file to the data dir
 # /bin/cp -f psichain.fasta /webdata/binaries/current/psipred/
