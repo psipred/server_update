@@ -146,6 +146,7 @@ scp /data/pgenthreader/tdb/psichain.lst django_worker@bm3:/data/pgenthreader/dat
 #csh /var/www/cgi-bin/psipred/bin/make_images
 
 # Clean the temp directory
+cd /data/update_tdb/
 rm -f /data/update_tdb/*.fsa
 rm -f /data/update_tdb/*.chk
 rm -f /data/update_tdb/*.slx
@@ -153,8 +154,7 @@ rm -f /data/update_tdb/*.bls
 # /usr/bin/find /webdata/tmp/autoupdate/ -mindepth 1 -mtime +60 -exec rm -rf {} \;
 
 # Inform psipred email address
-cd /data/update_tdb
-wc -l ./psichain.lst | Mail -s AUTOUPDATE-OK psipred@cs.ucl.ac.uk
+# wc -l ./psichain.lst | Mail -s AUTOUPDATE-OK psipred@cs.ucl.ac.uk
 
 echo `uname -n` | Mail -s "TDBUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
 # stop workers
