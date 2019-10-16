@@ -69,7 +69,7 @@ if ($new_nl - $old_nl < -500) then
 endif
 
 cd /data/pgenthreader/tdb/
-chmod uog+rw /data/pgenthreader/tdb/*
+find  /data/pgenthreader/tdb/ -type f -exec chmod uog+rw {} \;
 #remove the old fasta file of all the chains
 /bin/rm -f psichain.fasta
 

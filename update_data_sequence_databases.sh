@@ -40,6 +40,7 @@ celery --app=analytics_automated_project.celery:app worker --loglevel=INFO -Q pd
 ssh django_worker@bm3 "source /home/django_worker/aa_env/bin/activate; celery multi stop_verify worker --pidfile=/home/django_worker/analytics_automated/celery.pid"
 scp /data/update_tmp/pdbaa* django_worker@bm3:/data/pdbaa/
 scp /data/update_tmp/uniref* django_worker@bm3:/data/uniref/
+rm -f pdb70_from_mmcif_latest.tar.gz
 scp -r /data/update_tmp/pdb70* django_worker@bm3:/data/hhdb/pdb/
 scp /data/update_tmp/pdb_filter.dat django_worker@bm3:/data/hhdb/pdb/
 ssh django_worker@bm3 "source /home/django_worker/aa_env/bin/activate; cd /home/django_worker/analytics_automated/; celery --app=analytics_automated_project.celery:app worker --loglevel=INFO -Q low_localhost,localhost,high_localhost,celery,low_R,R,high_R,low_Python,Python,high_Python --detach --pidfile=celery.pid"
