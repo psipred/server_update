@@ -156,7 +156,7 @@ rm -f /data/update_tdb/*.bls
 # Inform psipred email address
 # wc -l ./psichain.lst | Mail -s AUTOUPDATE-OK psipred@cs.ucl.ac.uk
 
-echo `uname -n` | Mail -s "TDBUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
+echo `uname -n; wc -l ./psichain.lst` | Mail -s "TDBUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
 # stop workers
 # start workers again
 
