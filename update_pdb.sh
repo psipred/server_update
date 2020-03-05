@@ -3,6 +3,7 @@
 err_report() {
   echo "errexit on line $(caller)" # >&2
   echo `uname -n` | Mail -s "PDBUPDATE-FAILED $(caller)" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
+  curl -X POST -H 'Content-type: application/json' --data '{"text":":rage:\nPDBUPDATE-FAILED"}' https://hooks.slack.com/services/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
   exit 0
 }
 trap err_report ERR
@@ -48,3 +49,4 @@ echo "Hit maximum number of retries, giving up."
 fi
 
 echo `uname -n` | Mail -s "PDBUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
+curl -X POST -H 'Content-type: application/json' --data '{"text":":smile:\nPDBUPDATE-OK"}' https://hooks.slack.com/services/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
