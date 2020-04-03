@@ -2,7 +2,7 @@
 
 err_report() {
   echo "errexit on line $(caller)" # >&2
-  echo `uname -n` | Mail -s "PDBUPDATE-FAILED $(caller)" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
+  # echo `uname -n` | Mail -s "PDBUPDATE-FAILED $(caller)" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
   curl -X POST -H 'Content-type: application/json' --data '{"text":":rage:\n'`uname -n`' PDBUPDATE-FAILED"}' https://hooks.slack.com/services/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
   exit 0
 }
@@ -48,5 +48,5 @@ then
 echo "Hit maximum number of retries, giving up."
 fi
 
-echo `uname -n` | Mail -s "PDBUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
+# echo `uname -n` | Mail -s "PDBUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
 curl -X POST -H 'Content-type: application/json' --data '{"text":":smile:\n'`uname -n`' PDBUPDATE-OK"}' https://hooks.slack.com/services/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

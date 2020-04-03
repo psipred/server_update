@@ -1,7 +1,7 @@
 #!/bin/tcsh
 err_report() {
   echo "errexit on line $(caller)" >&2
-  echo `uname -n` | Mail -s "TDBUPDATE-FAILED $(caller)" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
+  # echo `uname -n` | Mail -s "TDBUPDATE-FAILED $(caller)" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
   curl -X POST -H 'Content-type: application/json' --data '{"text":":rage:\n'`uname -n`' TDBUPDATE-OK"}' https://hooks.slack.com/services/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
   exit 0
 }
@@ -158,7 +158,7 @@ rm -f /data/update_tdb/*.bls
 # Inform psipred email address
 # wc -l ./psichain.lst | Mail -s AUTOUPDATE-OK psipred@cs.ucl.ac.uk
 
-echo `uname -n; wc -l ./psichain.lst` | Mail -s "TDBUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
+# echo `uname -n; wc -l ./psichain.lst` | Mail -s "TDBUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
 curl -X POST -H 'Content-type: application/json' --data '{"text":":smile:\n'`uname -n`' TDBUPDATE-OK"}' https://hooks.slack.com/services/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
 
 # stop workers

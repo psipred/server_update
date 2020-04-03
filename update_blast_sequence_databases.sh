@@ -1,7 +1,7 @@
 #!/bin/sh
 err_report() {
   echo "errexit on line $(caller)" >&2
-  echo `uname -n` | Mail -s "BLASTUPDATE-FAILED $(caller)" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
+  # echo `uname -n` | Mail -s "BLASTUPDATE-FAILED $(caller)" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
   curl -X POST -H 'Content-type: application/json' --data '{"text":":rage:\n'`uname -n`' BLASTUPDATE-FAILED"}' https://hooks.slack.com/services/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
   exit 0
 }
@@ -34,5 +34,5 @@ scp /data/update_tmp/pdbaa* blast_worker@bm1:/data/pdbaa/
 scp /data/update_tmp/uniref* blast_worker@bm1:/data/uniref/
 ssh blast_worker@bm1 "source /home/blast_worker/aa_env/bin/activate; cd /home/blast_worker/analytics_automated/; celery --app=analytics_automated_project.celery:app worker --loglevel=INFO -Q blast,low_blast,high_blast --concurrency=24 --detach --pidfile=celery.pid"
 
-echo `uname -n` | Mail -s "BLASTUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
+# echo `uname -n` | Mail -s "BLASTUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
 curl -X POST -H 'Content-type: application/json' --data '{"text":":smile:\n'`uname -n`' BLASTUPDATE-OK"}' https://hooks.slack.com/services/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
