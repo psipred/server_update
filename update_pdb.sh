@@ -3,7 +3,7 @@
 err_report() {
   echo "errexit on line $(caller)" # >&2
   # echo `uname -n` | Mail -s "PDBUPDATE-FAILED $(caller)" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
-  curl -X POST -H 'Content-type: application/json' --data '{"text":":rage:\n'`uname -n`' PDBUPDATE-FAILED"}' https://hooks.slack.com/services/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
+  curl -X POST -H 'Content-type: application/json' --data '{"text":":rage:\n'`uname -n`' PDBUPDATE-FAILED"}' https://hooks.slack.com/services/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
   exit 0
 }
 trap err_report ERR
@@ -49,4 +49,4 @@ echo "Hit maximum number of retries, giving up."
 fi
 
 # echo `uname -n` | Mail -s "PDBUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
-curl -X POST -H 'Content-type: application/json' --data '{"text":":smile:\n'`uname -n`' PDBUPDATE-OK"}' https://hooks.slack.com/services/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
+curl -X POST -H 'Content-type: application/json' --data '{"text":":smile:\n'`uname -n`' PDBUPDATE-OK"}' https://hooks.slack.com/services/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
