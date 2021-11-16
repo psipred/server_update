@@ -31,14 +31,14 @@ tar -zxvf pdb70_from_mmcif_latest.tar.gz
 
 source /home/django_worker/aa_env/bin/activate
 cd /home/django_worker/analytics_automated/
-celery multi stop_verify worker --pidfile=celery.pid
+celery multi stop_verify worker --pidfile=/home/django_worker/analytics_automated/celery.pid --logfile=/home/django_worker/analytics_automated/logs/
 cp /data/update_tmp/pdbaa* /data/pdbaa/
 cp /data/update_tmp/uniref* /data/uniref/
 cp -r /data/update_tmp/pdb70* /data/hhdb/pdb/
 cp /data/update_tmp/pdb_filter.dat /data/hhdb/pdb/
 celery --app=analytics_automated_project.celery:app worker --loglevel=INFO -Q pdbtdbupdate,low_localhost,localhost,high_localhost,celery,low_R,R,high_R,low_Python,Python,high_Python --detach --pidfile=celery.pid
 
-ssh django_worker@bm3 "source /home/django_worker/aa_env/bin/activate; celery multi stop_verify worker --pidfile=/home/django_worker/analytics_automated/celery.pid"
+ssh django_worker@bm3 "source /home/django_worker/aa_env/bin/activate; celery multi stop_verify worker --pidfile=/home/django_worker/analytics_automated/celery.pid --logfile=/home/django_worker/analytics_automated/logs/"
 scp /data/update_tmp/pdbaa* django_worker@bm3:/data/pdbaa/
 scp /data/update_tmp/uniref* django_worker@bm3:/data/uniref/
 rm -f pdb70_from_mmcif_latest.tar.gz

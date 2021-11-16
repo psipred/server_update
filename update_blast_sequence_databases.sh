@@ -24,12 +24,12 @@ gunzip -f uniref90.fasta.gz
 
 source /home/blast_worker/aa_env/bin/activate
 cd /home/blast_worker/analytics_automated/
-celery multi stop_verify worker --pidfile=celery.pid
+celery multi stop_verify worker --pidfile=celery.pid --logfile=/home/blast_worker/blast_cache/
 cp /data/update_tmp/pdbaa* /data/pdbaa/
 cp /data/update_tmp/uniref* /data/uniref/
 celery --app=analytics_automated_project.celery:app worker --loglevel=INFO -Q sequpdate,blast,low_blast,high_blast --concurrency=24 --detach --pidfile=celery.pid
 
-ssh blast_worker@bm1 "source /home/blast_worker/aa_env/bin/activate; celery multi stop_verify worker --pidfile=/home/blast_worker/analytics_automated/celery.pid"
+ssh blast_worker@bm1 "source /home/blast_worker/aa_env/bin/activate; celery multi stop_verify worker --pidfile=/home/blast_worker/analytics_automated/celery.pid --logfile=/home/blast_worker/blast_cache/"
 scp /data/update_tmp/pdbaa* blast_worker@bm1:/data/pdbaa/
 scp /data/update_tmp/uniref* blast_worker@bm1:/data/uniref/
 ssh blast_worker@bm1 "source /home/blast_worker/aa_env/bin/activate; cd /home/blast_worker/analytics_automated/; celery --app=analytics_automated_project.celery:app worker --loglevel=INFO -Q blast,low_blast,high_blast --concurrency=24 --detach --pidfile=celery.pid"
