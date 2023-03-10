@@ -3,7 +3,7 @@
 err_report() {
   echo "errexit on line $(caller)" >&2
   # echo `uname -n` | Mail -s "SEQUPDATE-FAILED $(caller)" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
-  curl -X POST -H 'Content-type: application/json' --data '{"text":":rage:\n'`uname -n`' SEQUPDATE-FAILED"}' https://hooks.slack.com/services/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
+  curl -X POST -H 'Content-type: application/json' --data '{"text":":rage:\n'`uname -n`' SEQUPDATE-FAILED"}' https://hooks.slack.com/services/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
   exit 0
 }
 trap err_report ERR
@@ -47,4 +47,4 @@ scp /data/update_tmp/pdb_filter.dat django_worker@bm3:/data/hhdb/pdb/
 ssh django_worker@bm3 "source /home/django_worker/aa_env/bin/activate; cd /home/django_worker/analytics_automated/; celery --app=analytics_automated_project.celery:app worker --loglevel=INFO -Q low_localhost,localhost,high_localhost,celery,low_R,R,high_R,low_Python,Python,high_Python --detach --pidfile=celery.pid"
 
 # echo `uname -n` | Mail -s "SEQUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
-curl -X POST -H 'Content-type: application/json' --data '{"text":":smile:\n'`uname -n`' SEQUPDATE-OK"}' https://hooks.slack.com/services/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
+curl -X POST -H 'Content-type: application/json' --data '{"text":":smile:\n'`uname -n`' SEQUPDATE-OK"}' https://hooks.slack.com/services/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

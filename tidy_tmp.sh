@@ -4,4 +4,4 @@ find /tmp/django_worker/ -maxdepth 1 -type d -ctime +2 -exec rm -rf "{}" \;
 
 # echo `uname -n` | Mail -s "TMP CLEANED" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
 # curl -X POST -H 'Content-type: application/json' --data '{"text":":smile:\n'`uname -n`' TMP CLEANED"}' https://hooks.slack.com/services/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
-curl -X POST -H 'Content-type: application/json' --data '{"text":":smile:\n'`uname -n`' TMP CLEANED"}' https://hooks.slack.com/services/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
+curl -X POST -H 'Content-type: application/json' --data '{"text":":smile:\n'`uname -n`' TMP CLEANED"}' https://hooks.slack.com/services/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
