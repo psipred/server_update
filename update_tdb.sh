@@ -2,7 +2,7 @@
 err_report() {
   echo "errexit on line $(caller)" >&2
   # echo `uname -n` | Mail -s "TDBUPDATE-FAILED $(caller)" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
-  curl -X POST -H 'Content-type: application/json' --data '{"text":":rage:\n'`uname -n`' TDBUPDATE-OK"}' https://hooks.slack.com/services/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
+  curl -X POST -H 'Content-type: application/json' --data '{"text":":rage:\n'`uname -n`' TDBUPDATE-OK"}' https://hooks.slack.com/services/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
   exit 0
 }
 trap err_report ERR
@@ -66,7 +66,7 @@ set old_nl = `wc -l < psichain.old`
 #check that the new list is not > 2% smaller than the old list
 if ($new_nl - $old_nl < -500) then
     echo "AUTO_PSISUM-FAILED new_nl < old_nl-500" | Mail -s AUTO_PSISUM-FAILED psipred@cs.ucl.ac.uk
-    curl -X POST -H 'Content-type: application/json' --data '{"text":":rage:\n'`uname -n`' AUTOPSISUM-FAILED"}' https://hooks.slack.com/services/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
+    curl -X POST -H 'Content-type: application/json' --data '{"text":":rage:\n'`uname -n`' AUTOPSISUM-FAILED"}' https://hooks.slack.com/services/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
     exit
 endif
 
@@ -159,7 +159,7 @@ rm -f /data/update_tdb/*.bls
 # wc -l ./psichain.lst | Mail -s AUTOUPDATE-OK psipred@cs.ucl.ac.uk
 
 # echo `uname -n; wc -l ./psichain.lst` | Mail -s "TDBUPDATE-OK" -r psipred@cs.ucl.ac.uk -S smtp="smtp.cs.ucl.ac.uk:25" psipred@cs.ucl.ac.uk
-curl -X POST -H 'Content-type: application/json' --data '{"text":":smile:\n'`uname -n`' TDBUPDATE-OK"}' https://hooks.slack.com/services/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
+curl -X POST -H 'Content-type: application/json' --data '{"text":":smile:\n'`uname -n`' TDBUPDATE-OK"}' https://hooks.slack.com/services/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
 
 # stop workers
 # start workers again
