@@ -37,6 +37,7 @@ while [ $i -lt $MAX_RETRIES ]
 do
 echo "HEY 2"
 i=$(($i+1))
+ssh django_worker@blastmonster2 rsync -rlpt -v -z --delete --copy-links --port=33444 rsync.rcsb.org::ftp_data/structures/all/pdb/ /data/pdb
 ssh django_worker@bm3 rsync -rlpt -v -z --delete --copy-links --port=33444 rsync.rcsb.org::ftp_data/structures/all/pdb/ /data/pdb
 if [[ $? -eq 0 ]]; then
 break
